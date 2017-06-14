@@ -1,34 +1,23 @@
+const applyOpts = require('./element-helper')
 const html = require('bel')
 const noop = () => {}
 
+module.exports = input
+
 function input (type, handler, value, inputOpts) {
+  var classes = ['w-100', 'outline-0', 'ba', 'b--moon-gray', 'f6', 'pa1', 'br2']
+  var style = ''
+
   handler = typeof handler === 'function' ? handler : noop
   inputOpts = inputOpts || {}
 
-  const classes = ['w-100', 'outline-0', 'ba', 'b--moon-gray', 'f6', 'pa1', 'br2']
-  let style = ''
+  classes = applyOpts.classes(classes, inputOpts)
+  style = applyOpts.style(style, inputOpts)
 
-  if (Array.isArray(inputOpts.classes)) {
-    classes.push.apply(classes, inputOpts.classes)
-  }
-
-  if (typeof inputOpts.style === 'string') {
-    style += inputOpts.style
-  }
-
-  const $inputEl = html`<input class="${classes.join(' ')}" style="${style}"
+  var $inputEl = html`<input class="${classes.join(' ')}" style="${style}"
     type="${type}"
     oninput=${handler}
     value="${value}">`
 
-  Object
-    .keys(inputOpts)
-    .filter((key) => key !== 'classes' || key !== 'style')
-    .forEach((key) => {
-      $inputEl[key] = inputOpts[key]
-    })
-
-  return $inputEl
+  return applyOpts.opts($inputEl, inputOpts)
 }
-
-module.exports = input

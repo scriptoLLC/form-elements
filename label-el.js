@@ -1,30 +1,20 @@
+const applyOpts = require('./element-helper')
 const html = require('bel')
 
+module.exports = label
+
 function label (label, labelOpts) {
+  var classes = ['db', 'mt3', 'ttu', 'lh-copy']
+  var style = 'text-indent: 4px;'
+
   labelOpts = labelOpts || {}
-  const classes = ['db', 'mt3', 'ttu', 'lh-copy']
-  let style = 'text-indent: 4px;'
 
-  if (Array.isArray(labelOpts.classes)) {
-    classes.push.apply(classes, labelOpts.classes)
-  }
+  classes = applyOpts.classes(classes, labelOpts)
+  style = applyOpts.style(style, labelOpts)
 
-  if (typeof labelOpts.style === 'string') {
-    style += labelOpts.style
-  }
-
-  const $label = html`<label class="${classes.join(' ')}" style="${style}">
+  var $label = html`<label class="${classes.join(' ')}" style="${style}">
     ${label}<br>
   </label>`
 
-  Object
-    .keys(labelOpts)
-    .filter((key) => key !== 'classes' || key !== 'style')
-    .forEach((key) => {
-      $label[key] = labelOpts[key]
-    })
-
-  return $label
+  return applyOpts.opts($label, labelOpts)
 }
-
-module.exports = label

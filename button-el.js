@@ -1,33 +1,22 @@
+const applyOpts = require('./element-helper')
 const html = require('bel')
 const noop = () => {}
 
+module.exports = button
+
 function button (text, handler, buttonOpts) {
+  var classes = ['b', 'f5', 'white', 'w-100', 'mt3', 'pt1', 'pb2', 'lh-copy', 'outline-0', 'bn', 'br2']
+  var style = 'background: #00C9D8;'
+
   handler = typeof handler === 'function' ? handler : noop
   buttonOpts = buttonOpts || {}
 
-  const classes = ['b', 'f5', 'white', 'w-100', 'mt3', 'pt1', 'pb2', 'lh-copy', 'outline-0', 'bn', 'br2']
-  let style = 'background: #00C9D8;'
+  classes = applyOpts.classes(classes, buttonOpts)
+  style = applyOpts.style(style, buttonOpts)
 
-  if (Array.isArray(buttonOpts.classes)) {
-    classes.push.apply(classes, buttonOpts.classes)
-  }
-
-  if (typeof buttonOpts.style === 'string') {
-    style += buttonOpts.style
-  }
-
-  const $button = html`<button class="${classes.join(' ')}" style="${style}" onclick=${handler}>
+  var $button = html`<button class="${classes.join(' ')}" style="${style}" onclick=${handler}>
     ${text}
   </button>`
 
-  Object
-    .keys(buttonOpts)
-    .filter((key) => key !== 'classes' || key !== 'style')
-    .forEach((key) => {
-      $button[key] = buttonOpts[key]
-    })
-
-  return $button
+  return applyOpts.opts($button, buttonOpts)
 }
-
-module.exports = button
