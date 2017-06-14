@@ -1,9 +1,34 @@
 const html = require('bel')
+const noop = () => {}
 
-function input (label, type, handler, value) {
-  return html`<label class="db mt3" style="text-indent: 4px;"><span class="ttu lh-copy" style="letter-spacing: 0.01em; font-size: 0.625rem">${label}</span><br>
-    <input class="w-100 outline-0 ba b--moon-gray f6 pa1 br2" type="${type}" oninput=${handler} value="${value}">
-  </label>`
+function input (type, handler, value, inputOpts) {
+  handler = typeof handler === 'function' ? handler : noop
+  inputOpts = inputOpts || {}
+
+  const classes = ['w-100', 'outline-0', 'ba', 'b--moon-gray', 'f6', 'pa1', 'br2']
+  let style = ''
+
+  if (Array.isArray(inputOpts.classes)) {
+    classes.push.apply(classes, inputOpts.classes)
+  }
+
+  if (typeof inputOpts.style === 'string') {
+    style += inputOpts.style
+  }
+
+  const $inputEl = html`<input class="${classes.join(' ')}" style="${style}"
+    type="${type}"
+    oninput=${handler}
+    value="${value}">`
+
+  Object
+    .keys(inputOpts)
+    .filter((key) => key !== 'classes' || key !== 'style')
+    .forEach((key) => {
+      $inputEl[key] = inputOpts[key]
+    })
+
+  return $inputEl
 }
 
 module.exports = input
