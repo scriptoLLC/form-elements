@@ -1,5 +1,9 @@
-const applyOpts = require('./element-helper')
 const html = require('bel')
+
+const applyOpts = require('./element-helper')
+const mergeFuncs = require('./merge-function')
+const createValidator = require('./create-validator')
+
 const noop = () => {}
 
 module.exports = input
@@ -19,5 +23,14 @@ function input (type, handler, value, inputOpts) {
     oninput=${handler}
     value="${value}">`
 
+  if (inputOpts.validate || typeof inputOpts.validator === 'function') {
+    const validator = createValidator(inputOpts.errorDisplay, inputOpts.validator)
+    const blur = inputOpts.onblur
+
+    inputOpts.onblur = typeof blur === 'function'
+      ? mergeFuncs(validator, blur) : validator
+  }
+
   return applyOpts.opts($inputEl, inputOpts)
 }
+
