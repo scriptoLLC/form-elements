@@ -20,9 +20,11 @@ function applyClasses (classes, opts) {
   return classes
 }
 
+// We don't want to set any of these keys directly on the DOM object that we create
+const optsIgnore = ['classes', 'style', 'validator', 'errDisplay', 'validate']
 function applyOpts (el, opts) {
   Object.keys(opts)
-    .filter((key) => key !== 'classes' || key !== 'style')
+    .filter((key) => !optsIgnore.includes(key))
     .forEach((key) => {
       el[key] = opts[key]
     })

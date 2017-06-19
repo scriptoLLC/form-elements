@@ -35,8 +35,10 @@ function error (opts) {
   }
 
   function removeError (key) {
-    messages.delete(key)
-    container.removeChild(getMsgDiv(key))
+    if (messages.has(key)) {
+      messages.delete(key)
+      container.removeChild(getMsgDiv(key))
+    }
   }
 
   function clear () {
