@@ -33,4 +33,3 @@ function input (type, handler, value, inputOpts) {
 
   return applyOpts.opts($inputEl, inputOpts)
 }
-
