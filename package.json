@@ -4,13 +4,16 @@
   "description": "Form elements for showrunner",
   "main": "form-elements.js",
   "scripts": {
-    "test": "standard && browserify test/*.spec.js | tape-run",
+    "test": "standard && npm run dep && browserify test/*.spec.js | tape-run",
     "coverage": "npm run test && node test-harness.js",
-    "start": "bankai start standalone.js --no-uglify --debug"
+    "start": "bankai start standalone.js --no-uglify --debug",
+    "dep": "dependency-check . && dependency-check . --unused --no-dev -i envify -i yo-yoify -i babelify -i babel-preset-env -i sheetify"
   },
   "browserify": {
     "transform": [
+      "envify",
       "yo-yoify",
+      "sheetify/transform",
       "babelify"
     ]
   },
@@ -21,6 +24,8 @@
     "babel-preset-env": "^1.5.2",
     "babelify": "^7.3.0",
     "bel": "^5.0.0",
+    "envify": "^4.0.0",
+    "sheetify": "^6.1.0",
     "yo-yoify": "^3.7.3"
   },
   "devDependencies": {
@@ -28,6 +33,7 @@
     "bankai": "^8.1.1",
     "browserify": "^14.3.0",
     "browserify-istanbul": "github:toddself/browserify-istanbul#strip-base-path",
+    "dependency-check": "^2.9.1",
     "istanbul": "^0.4.5",
     "nanobus": "^4.0.0",
     "opener": "^1.4.3",
