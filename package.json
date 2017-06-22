@@ -1,6 +1,6 @@
 {
   "name": "@scriptollc/form-elements",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Form elements for showrunner",
   "main": "form-elements.js",
   "scripts": {
