@@ -17,13 +17,19 @@
       "babelify"
     ]
   },
-  "keywords": ["bel", "choo", "forms", "form", "validation"],
+  "keywords": [
+    "bel",
+    "choo",
+    "forms",
+    "form",
+    "validation"
+  ],
   "author": "Todd Kennedy <todd@selfassembled.org>",
   "license": "Apache-2.0",
   "dependencies": {
     "babel-preset-env": "^1.5.2",
     "babelify": "^7.3.0",
-    "bel": "^5.0.0",
+    "bel": "^4.6.0",
     "envify": "^4.0.0",
     "sheetify": "^6.1.0",
     "yo-yoify": "^3.7.3"
