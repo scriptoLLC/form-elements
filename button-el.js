@@ -5,8 +5,8 @@ const noop = () => {}
 module.exports = button
 
 function button (text, handler, buttonOpts) {
-  var classes = ['b', 'f5', 'white', 'w-100', 'mt3', 'pt1', 'pb2', 'lh-copy', 'outline-0', 'bn', 'br2']
-  var style = 'background: #00C9D8;'
+  var classes = []
+  var style = ''
 
   handler = typeof handler === 'function' ? handler : noop
   buttonOpts = buttonOpts || {}

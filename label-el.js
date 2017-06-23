@@ -4,8 +4,8 @@ const html = require('bel')
 module.exports = label
 
 function label (label, labelOpts, children) {
-  var classes = ['db', 'mt3', 'ttu', 'lh-copy']
-  var style = 'text-indent: 4px;'
+  var classes = []
+  var style = ''
 
   if (!Array.isArray(children)) {
     children = [children]

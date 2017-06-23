@@ -1,12 +1,12 @@
 {
-  "name": "@scriptollc/form-elements",
+  "name": "form-elements",
   "version": "2.2.2",
-  "description": "Form elements for showrunner",
+  "description": "Form elements for HTML-element based systems",
   "main": "form-elements.js",
   "scripts": {
     "test": "standard && npm run dep && node test/ssr-rendering.js && browserify test/*.spec.js | tape-run",
     "coverage": "npm run test && node test-harness.js",
-    "start": "bankai start standalone.js --no-uglify --debug",
+    "start": "bankai start standalone.js --debug",
     "dep": "dependency-check . && dependency-check . --unused --no-dev -i envify -i yo-yoify -i babelify -i babel-preset-env -i sheetify"
   },
   "browserify": {
@@ -17,9 +17,9 @@
       "babelify"
     ]
   },
-  "keywords": [],
+  "keywords": ["bel", "choo", "forms", "form", "validation"],
   "author": "Todd Kennedy <todd@selfassembled.org>",
-  "license": "UNLICENSED",
+  "license": "Apache-2.0",
   "dependencies": {
     "babel-preset-env": "^1.5.2",
     "babelify": "^7.3.0",
@@ -29,7 +29,6 @@
     "yo-yoify": "^3.7.3"
   },
   "devDependencies": {
-    "@scriptollc/app-entry": "^1.0.1",
     "bankai": "^8.1.1",
     "browserify": "^14.3.0",
     "browserify-istanbul": "github:toddself/browserify-istanbul#strip-base-path",

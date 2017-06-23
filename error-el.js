@@ -2,7 +2,7 @@ const html = require('bel')
 const helpers = require('./element-helper')
 
 function errorContainer (opts) {
-  const classes = helpers.classes(['center', 'w-100', 'tc', 'red', 'f4', 'mt3', 'mb3'], opts)
+  const classes = helpers.classes([], opts)
   const style = helpers.style('', opts)
   const el = helpers.opts(html`<div class="${classes.join(' ')}" style="${style}"></div>`, opts)
   return el
@@ -19,9 +19,9 @@ function error (opts) {
 
   return {
     render: () => container,
-    displayError,
-    removeError,
-    clear
+    displayError: displayError,
+    removeError: removeError,
+    clear: clear
   }
 
   function displayError (key, txt) {

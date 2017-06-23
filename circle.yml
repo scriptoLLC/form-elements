@@ -1,9 +1,6 @@
 machine:
   node:
     version: 6
-dependencies:
-  pre:
-    - ./npmauth.sh
 test:
   override:
     - npm run coverage

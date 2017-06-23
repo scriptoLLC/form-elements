@@ -1,4 +1,4 @@
-const entry = require('@scriptollc/app-entry')
+const choo = require('choo')
 const html = require('bel')
 const els = require('./')
 
@@ -36,4 +36,6 @@ function main (state, emit) {
   }
 }
 
-entry([], [{route: '/', method: main}], 'body')
+const app = choo()
+app.route('/', main)
+document.body.appendChild(app.start())

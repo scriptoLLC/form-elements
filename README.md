@@ -111,4 +111,4 @@ Create a form input element wrapped by a label
 ```
 
 ## License
-Copyright © 2017 Scripto, LLC. All rights reserved
+Copyright © 2017 Scripto, LLC. Licensed under Apache-2.0

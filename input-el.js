@@ -9,7 +9,7 @@ const noop = () => {}
 module.exports = input
 
 function input (type, handler, value, inputOpts) {
-  var classes = ['w-100', 'outline-0', 'ba', 'b--moon-gray', 'f6', 'pa1', 'br2']
+  var classes = []
   var style = ''
 
   handler = typeof handler === 'function' ? handler : noop
