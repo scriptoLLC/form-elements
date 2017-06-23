@@ -3,9 +3,13 @@ const html = require('bel')
 
 module.exports = label
 
-function label (label, labelOpts) {
+function label (label, labelOpts, children) {
   var classes = ['db', 'mt3', 'ttu', 'lh-copy']
   var style = 'text-indent: 4px;'
+
+  if (!Array.isArray(children)) {
+    children = [children]
+  }
 
   labelOpts = labelOpts || {}
 
@@ -14,6 +18,7 @@ function label (label, labelOpts) {
 
   var $label = html`<label class="${classes.join(' ')}" style="${style}">
     ${label}<br>
+    ${children.map((child) => child)}
   </label>`
 
   return applyOpts.opts($label, labelOpts)

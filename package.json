@@ -4,7 +4,7 @@
   "description": "Form elements for showrunner",
   "main": "form-elements.js",
   "scripts": {
-    "test": "standard && npm run dep && browserify test/*.spec.js | tape-run",
+    "test": "standard && npm run dep && node test/ssr-rendering.js && browserify test/*.spec.js | tape-run",
     "coverage": "npm run test && node test-harness.js",
     "start": "bankai start standalone.js --no-uglify --debug",
     "dep": "dependency-check . && dependency-check . --unused --no-dev -i envify -i yo-yoify -i babelify -i babel-preset-env -i sheetify"
