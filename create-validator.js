@@ -1,5 +1,5 @@
 module.exports = function createValidator (errDisplay, validator) {
-  const key = (new Date() % 9e6).toString(36)
+  const key = `error-${(new Date() % 9e6).toString(36)}`
 
   return function checkValidity (evt) {
     const $el = evt.currentTarget

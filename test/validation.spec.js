@@ -25,11 +25,16 @@ test('no validation, no problems', (t) => {
     validate: false,
     errorDisplay: err
   }
-  const $err = err.render()
+
+  document.body.appendChild(err.render())
+
   const $input = input('email', null, '', inputOpts)
   $input.value = 't'
   $input.dispatchEvent(new window.Event('blur'))
-  t.equal($err.children.length, 0, 'no errors')
+  t.equal(err.$errorContainer.children.length, 0, 'no errors')
+  while (document.body.children.length > 0) {
+    document.body.removeChild(document.body.firstElementChild)
+  }
   t.end()
 })
 
@@ -38,11 +43,18 @@ test('no explicit validation, no problems', (t) => {
   const inputOpts = {
     errorDisplay: err
   }
-  const $err = err.render()
+
+  document.body.appendChild(err.render())
+
   const $input = input('email', null, '', inputOpts)
   $input.value = 't'
   $input.dispatchEvent(new window.Event('blur'))
-  t.equal($err.children.length, 0, 'no errors')
+
+  t.equal(err.$errorContainer.children.length, 0, 'no errors')
+
+  while (document.body.children.length > 0) {
+    document.body.removeChild(document.body.firstElementChild)
+  }
   t.end()
 })
 
@@ -54,23 +66,30 @@ test('built-in validation', (t) => {
     validate: true,
     onblur: () => t.pass('ran custom on blur')
   }
-  const $err = err.render()
+
+  document.body.appendChild(err.render())
   const $input = input('email', null, '', inputOpts)
 
   $input.value = 't'
   $input.dispatchEvent(new window.Event('blur'))
-  t.equal($err.children.length, 1, 'show built-in error')
+  t.equal(err.$errorContainer.children.length, 1, 'show built-in error')
 
   $input.dispatchEvent(new window.Event('blur'))
-  t.equal($err.children.length, 1, 'still only one error')
-  t.equal($err.children[0].innerText, emailErrors[browser], 'chrome error message')
+  t.equal(err.$errorContainer.children.length, 1, 'still only one error')
+  t.equal(err.$errorContainer.children[0].innerText, emailErrors[browser], 'chrome error message')
+
+  err.$el.addEventListener('transitionend', () => {
+    t.equal(err.$errorContainer.children.length, 0, 'no errors')
+    $input.dispatchEvent(new window.Event('blur'))
+    t.equal(err.$errorContainer.children.length, 0, 'still no errors')
+
+    while (document.body.children.length > 0) {
+      document.body.removeChild(document.body.firstElementChild)
+    }
+  })
 
   $input.value = 't@t'
   $input.dispatchEvent(new window.Event('blur'))
-  t.equal($err.children.length, 0, 'no errors')
-
-  $input.dispatchEvent(new window.Event('blur'))
-  t.equal($err.children.length, 0, 'still no errors')
 })
 
 test('custom validation', (t) => {
@@ -86,16 +105,22 @@ test('custom validation', (t) => {
       return true
     }
   }
-  const $err = err.render()
+  document.body.appendChild(err.render())
   const $input = input('email', null, '', inputOpts)
 
   $input.value = 't'
   $input.dispatchEvent(new window.Event('blur'))
-  t.equal($err.children.length, 1, 'only one error')
-  t.equal($err.children[0].innerText, 'You must boop!', 'custom error message')
+  t.equal(err.$errorContainer.children.length, 1, 'only one error')
+  t.equal(err.$errorContainer.children[0].innerText, 'You must boop!', 'custom error message')
 
   $input.value = 'boop'
   $input.dispatchEvent(new window.Event('blur'))
-  t.equal($err.children.length, 0, 'no errors')
-  t.end()
+
+  err.$el.addEventListener('transitionend', () => {
+    t.equal(err.$errorContainer.children.length, 0, 'no errors')
+    while (document.body.children.length > 0) {
+      document.body.removeChild(document.body.firstElementChild)
+    }
+    t.end()
+  })
 })

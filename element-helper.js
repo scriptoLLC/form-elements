@@ -21,7 +21,9 @@ function applyClasses (classes, opts) {
 }
 
 // We don't want to set any of these keys directly on the DOM object that we create
-const optsIgnore = ['classes', 'style', 'validator', 'errDisplay', 'validate']
+const optsIgnore = ['classes', 'style', 'validator', 'errDisplay', 'validate',
+  'animate', 'hiddenState', 'visibleState']
+
 function applyOpts (el, opts) {
   Object.keys(opts)
     .filter((key) => !optsIgnore.includes(key))

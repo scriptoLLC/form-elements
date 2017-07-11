@@ -10,22 +10,73 @@ A collection of form elements.
 const els = require('@scriptoll/form-elements')
 const html = require('bel')
 
-function form (state, emit) {
-  const err = els.error()
+const scratch = {
+  test: '',
+  test2: '',
+  pushed: 0
+}
 
-  return html`<form onsubmit=${submit}>
-    ${err.render()}
-    ${els.labeledInput('Email', 'email', update, state.email, {validate: true, errorDisplay: err})}
-    ${els.button('submit!', submit)}
-  </form>`
+const errOpts = {
+  classes: ['error-note'],
+  animate: true,
+  hiddenState: {
+    height: function () {
+      let height = this.$errorContainer.clientHeight
+      if (this.$errorContainer.children.length === 0) {
+        height = '0'
+      }
+      return `${height}px`
+    },
+    overflow: 'hidden',
+    transition: 'height 0.8s'
+  },
+  visibleState: {
+    height: function () {
+      let height = this.$errorContainer.clientHeight
+      if (this.$errorContainer.children.length === 0) {
+        height = '0'
+      }
+      return `${height}px`
+    }
+  }
+}
 
-  function input (evt) {
-    state.email = evt.currentTarget.value
+function main (state, emit) {
+  const formErrors = els.error(errOpts)
+
+  const inputOpts = {
+    classes: [],
+    validate: true,
+    errorDisplay: formErrors
   }
 
-  function submit (evt) {
-    evt.preventDefault() // so the browser doesn't submit this thing
-    emit('form:submit')
+  const input2Opts = {
+    classes: [],
+    required: true,
+    validate: true,
+    errorDisplay: formErrors
+  }
+
+  const $input = els.labeledInput('test email', 'email', oninput, scratch.test, inputOpts)
+  const $input2 = els.labeledInput('test required', 'text', oninput2, scratch.test2, input2Opts)
+
+  return html`<div class="">
+    <div class="">
+      ${formErrors.render()}<br>
+      <b>Button pushed:</b> ${scratch.pushed}<br>
+      <b>Input value:</b> ${scratch.test}<br>
+      ${$input}<br>
+      ${$input2}<br>
+      ${els.button('i am a button', (evt) => ++scratch.pushed && emit('render'))}
+    </div>
+  </div>`
+
+  function oninput (evt) {
+    scratch.test = evt.currentTarget.value
+  }
+
+  function oninput2 (evt) {
+    scratch.test2 = evt.currentTarget.value
   }
 }
 ```
@@ -61,9 +112,38 @@ Event handlers should be provided using the `on[event]` key, e.g. `oninput` or `
 
 Each element type will have specific attributes that can be set in addition to the [default attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes) provided by the DOM spec.
 
+#### `errorOptions:object(key:string,value:any)`
+This is a superset of `elementOptions` containing the following extra values:
+
+* `animate:boolean`: whether or not it should attach style information for CSS animations to show/hide the error element
+* `visibleState:object(key:string,value:string|function)`: what styles to apply to the object when it's visible
+* `hiddenState:object(key:string,value:string|function)`: what styles to apply to the object when it's visible
+
+The valid keys for `visibleState` and `hiddenState` are all valid HTML Style rules. You can either set them to a string or a function which returns a sting and runs in the context of the Error element.
+
+```js
+{
+  animate: true,
+  hiddenState: {
+    opacity: 0,
+    transition: 'opacity 0.8s ease-in'
+  },
+  visibleState: {
+    opacity: 1,
+    height: function () {
+      const height = this.$el.clientHeight + 15
+      return `${height}px`
+    }
+  }
+}
+```
+
+The initial state of the object is `hiddenState` -- these rules will supercede any styles or classes on the object. When errors are presented to the user, it will apply the styles found in `visibleState`.  These will be applyed everytime a new error is presented, allowing you to grow/shrink or otherwise alter the box. When all of the errors are gone, it will apply
+the `hiddenState` styles again.
+
 ## API
 
-#### `error(opts:elementOptions):ErrorDisplay`
+#### `error(opts:errorOptions):ErrorDisplay`
 Create a new error display object
 
 `ErrorDisplay`:
