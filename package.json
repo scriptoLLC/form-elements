@@ -1,6 +1,6 @@
 {
   "name": "form-elements",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "Form elements for HTML-element based systems",
   "main": "form-elements.js",
   "scripts": {
