@@ -29,7 +29,7 @@
   "dependencies": {
     "babel-preset-env": "^1.5.2",
     "babelify": "^7.3.0",
-    "bel": "^4.6.0",
+    "bel": "^5.1.2",
     "envify": "^4.0.0",
     "sheetify": "^6.1.0",
     "yo-yoify": "^3.7.3"
