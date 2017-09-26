@@ -12,12 +12,14 @@ function ErrorEl (opts) {
 }
 
 ErrorEl.prototype._addTransition = function addTransition (transitionData) {
-  const keys = Object.keys(transitionData)
-  for (let i = 0, len = keys.length; i < len; i++) {
-    const key = keys[i]
-    const td = transitionData[key]
-    const val = typeof td === 'function' ? td.call(this) : td
-    this.$el.style[key] = val
+  if (typeof window !== 'undefined') {
+    const keys = Object.keys(transitionData)
+    for (let i = 0, len = keys.length; i < len; i++) {
+      const key = keys[i]
+      const td = transitionData[key]
+      const val = typeof td === 'function' ? td.call(this) : td
+      this.$el.style[key] = val
+    }
   }
 }
 
