@@ -32,7 +32,7 @@
     "bel": "^5.1.2",
     "envify": "^4.0.0",
     "sheetify": "^6.1.0",
-    "yo-yoify": "^3.7.3"
+    "yo-yoify": "^4.0.0"
   },
   "devDependencies": {
     "bankai": "^7.6.2",
