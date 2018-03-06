@@ -7,7 +7,7 @@ A collection of form elements.
 
 ## Usage
 ```js
-const els = require('@scriptoll/form-elements')
+const els = require('form-elements')
 const html = require('bel')
 
 const scratch = {
