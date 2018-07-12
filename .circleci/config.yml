@@ -1,0 +1,52 @@
+version: 2
+jobs:
+  build:
+    docker:
+      # specify the version you desire here
+      - image: circleci/node:8-browsers
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run:
+          name: Authenticate with NPM
+          command: echo -e "//registry.npmjs.org/:_authToken="$NPM_TOKEN >> .npmrc
+
+      # temp workaround until browsers image is fixed
+      # libgconf-2.so.4 is required by chrome but no longer included in image
+      - run:
+          name: Install libgconf-2-4
+          command: sudo apt-get install libgconf-2-4
+
+      - run:
+          name: Install Dependencies
+          command: npm install
+
+      - run:
+          name: Running X virtual framebuffer
+          command: Xvfb :99 > /dev/null 2>&1 &
+          background: true
+
+      # run tests!
+      - run:
+          name: Executing tests
+          command: DISPLAY=:99 npm test
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build:
+          context: org-global

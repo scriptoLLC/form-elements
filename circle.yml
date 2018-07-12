@@ -1,8 +1,0 @@
-machine:
-  node:
-    version: 6
-test:
-  override:
-    - npm run coverage
-  post:
-    - cp -r coverage/* $CIRCLE_ARTIFACTS/. || exit 0
