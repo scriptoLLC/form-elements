@@ -1,5 +1,5 @@
 const applyOpts = require('./element-helper')
-const html = require('bel')
+const html = require('nanohtml')
 const noop = () => {}
 
 module.exports = button

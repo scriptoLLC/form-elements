@@ -8,7 +8,7 @@ A collection of form elements.
 ## Usage
 ```js
 const els = require('form-elements')
-const html = require('bel')
+const html = require('nanohtml')
 
 const scratch = {
   test: '',

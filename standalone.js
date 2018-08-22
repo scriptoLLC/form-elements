@@ -1,5 +1,5 @@
 const choo = require('choo')
-const html = require('bel')
+const html = require('nanohtml')
 const els = require('./')
 
 const scratch = {

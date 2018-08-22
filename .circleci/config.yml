@@ -11,9 +11,9 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+            - source-v1-{{ .Branch }}-{{ .Revision }}
+            - source-v1-{{ .Branch }}-
+            - source-v1-
 
       - run:
           name: Authenticate with NPM
@@ -40,9 +40,9 @@ jobs:
           command: DISPLAY=:99 npm test
 
       - save_cache:
+          key: source-v1-{{ .Branch }}-{{ .Revision }}
           paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+            - ".git"
 
 workflows:
   version: 2

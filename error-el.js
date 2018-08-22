@@ -1,4 +1,4 @@
-const html = require('bel')
+const html = require('nanohtml')
 const helpers = require('./element-helper')
 
 function ErrorEl (opts) {

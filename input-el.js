@@ -1,4 +1,4 @@
-const html = require('bel')
+const html = require('nanohtml')
 
 const applyOpts = require('./element-helper')
 const mergeFuncs = require('./merge-function')
