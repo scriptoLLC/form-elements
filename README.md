@@ -1,6 +1,5 @@
 # form-elements
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/scriptoLLC/form-elements.svg?token=32f7c3eae55949fb5be85d675d35261d721a31f4e4d4f343cc2b665f8ce5f885&ts=1498057801104)](https://greenkeeper.io/)
 [![CircleCI](https://circleci.com/gh/scriptoLLC/form-elements.svg?style=svg&circle-token=eb06e1385fe4eb07f3e0da106a4dd9f856aa403b)](https://circleci.com/gh/scriptoLLC/form-elements)
 
 A collection of form elements.
@@ -191,4 +190,4 @@ Create a form input element wrapped by a label
 ```
 
 ## License
-Copyright © 2017 Scripto, LLC. Licensed under Apache-2.0
+Copyright © 2018 Scripto, LLC. Licensed under Apache-2.0
